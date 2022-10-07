@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Calculator",
+    "\\calculator",
     "\\DeathCalculator"
   ],
-  "SelectedNode": "\\Calculator\\urls.py",
+  "SelectedNode": "\\calculator\\apps.py",
   "PreviewInSolutionExplorer": false
 }
