@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     <head>
         <title>Death Calculator</title>
-        <link rel = "stylesheet" href="styles.css">
+        <link rel = "stylesheet" href="{% static 'calculator/styles.css' %}">
     </head>
     <body>
         <h1>DEATH CALCULATOR</h1>
@@ -11,7 +12,7 @@
         <h2 id="thirdSentence">Enter your information below to find out.</h2>
         
         <form action="results/" method="get">
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="Submit">
         </form>
 </body>
 </html>
