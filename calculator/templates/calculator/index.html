@@ -6,13 +6,15 @@
         <link rel = "stylesheet" href="{% static 'calculator/styles.css' %}">
     </head>
     <body>
+        <script src="{% static 'calculator/warning.js' %}"></script>
         <h1>DEATH CALCULATOR</h1>
         <h2 id="firstSentence">We're all going to die one day.</h2>
         <h2 id="secondSentence">But how will it happen?</h2>
         <h2 id="thirdSentence">Enter your information below to find out.</h2>
         
-        <form action="results/" method="get">
-            <select name="Ethnicity" id="Ethnicity">
+        <form action="results/" onsubmit="return validateForm()" method="get"> 
+            <br><br>
+            <select name="Ethnicity" id="Ethnicity" onchange="choice1(this)">
                 <option value="Please select">Ethnicity</option>
                 <option value="White">White</option>
                 <option value="African American">African American</option>
@@ -22,6 +24,7 @@
                 <option value="Native Hawaiian">Native Hawaiian</option>
                 <option value="Other">Other</option>
             </select>
+            <br><br>
             <input type="submit" value="Submit" id="Submit">
         </form>
 </body>
