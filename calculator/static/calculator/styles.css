@@ -54,3 +54,8 @@ h2{
 #graph{
     height: 500px;
 }
+
+#query_results {
+    margin-left: auto;
+    margin-right: auto;
+}

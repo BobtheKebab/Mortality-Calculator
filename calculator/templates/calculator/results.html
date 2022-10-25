@@ -6,7 +6,6 @@
     </head>
     <body>
         <h1 id="result_h1">Your Top 5 Causes of Death</h1>
-        <img src="{% static 'calculator/graph.png' %}" id="graph">
         <ul>
             {{ query_results | safe}}
         </ul>
