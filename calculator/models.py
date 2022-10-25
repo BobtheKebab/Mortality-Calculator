@@ -12,8 +12,8 @@ class DataParser:
         client = Socrata(data_url, app_token)
 
         payload = "year = '2019' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity + "'"
-        #slct = "leading_cause, deaths, age_adjusted_death_rate"
-        results = client.get(data_set, limit=pLimit, where=payload)
+        cols = "leading_cause, deaths, age_adjusted_death_rate"
+        results = client.get(data_set, limit=pLimit, where=payload, select=cols)
         #, order="age_adjusted_death_rate DESC")
 
         results_df = pd.DataFrame.from_records(results)
