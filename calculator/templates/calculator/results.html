@@ -6,7 +6,9 @@
     </head>
     <body>
         <h1 id="result_h1">Your Top 5 Causes of Death</h1>
-        <img src="{% static 'calculator/graph.png' %}" id="graph">
+        <ul>
+            {{ query_results | safe}}
+        </ul>
         <h2>Click the graph to view more information</h2>
         <h2>Or click below to view all death causes over a 10-year period</h2>
 

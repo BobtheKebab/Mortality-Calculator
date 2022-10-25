@@ -1,10 +1,11 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
+from calculator.models import DataParser
 
 def index(request):
-    template = loader.get_template('calculator/index.html')
-    return HttpResponse(template.render())
+    return render(request, 'calculator/index.html')
 
 def results(request):
-    template = loader.get_template('calculator/results.html')
-    return HttpResponse(template.render())
+    dp = DataParser()
+    query_results = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5).to_html() # html table of results
+    context = {'query_results': query_results}
+    return render(request, 'calculator/results.html', context)
