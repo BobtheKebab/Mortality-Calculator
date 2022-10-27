@@ -3,7 +3,7 @@ from calculator.models import DataParser
 import pandas as pd
 
 class GetResultTestCase(TestCase):
-    def getResult(self):
+    def test_getResult(self):
         sex = "Female"
         ethnicity = "White"
         limit = 5
