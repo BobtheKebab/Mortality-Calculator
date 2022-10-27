@@ -6,11 +6,11 @@ class DataParser:
 
     @staticmethod
     def getDeathCauses(pSex, pEthnicity, pLimit):
-        if (pEthnicity == None):
+        if (pEthnicity is None):
             return None
-        if (pSex == None):
+        if (pSex is None):
             return None
-        if (pLimit == None):
+        if (pLimit is None):
             return None
         data_url = 'data.cityofnewyork.us'  # The Host Name for the API endpointy)
         data_set = 'jb7j-dtam'  # The data set at the API endpoint
