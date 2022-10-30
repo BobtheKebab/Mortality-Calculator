@@ -1,6 +1,5 @@
 from django.test import TestCase 
 from calculator.models import DataParser
-import pandas as pd
 
 class GetResultTestCase(TestCase):
     def testInvalidInput(self):
