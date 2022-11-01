@@ -9,3 +9,9 @@ def results(request):
     query_results = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5).to_html() # html table of results
     context = {'query_results': query_results}
     return render(request, 'calculator/results.html', context)
+
+def visualize(request):
+    dp = DataParser()
+    query_results = dp.visualizeDeathCauses().to_html()
+    context = {'query_results': query_results}
+    return render(request, 'calculator/visualize.html', context)
