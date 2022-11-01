@@ -6,5 +6,7 @@ urlpatterns = [
     # /calculator/
     path('', views.index, name='index'),
     # /calculator/results/
-    path('results/', views.results, name='results')
+    path('results/', views.results, name='results'),
+    # /calculator/visualize/
+    path('visualize/', views.visualize, name='visualize')
 ]

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'calculator/styles.css' %}">
+</head>
+<body>
+    <h1 id="result_h1">All Causes of Death</h1>
+    <ul>
+        {{ query_results | safe}}
+    </ul>
+</body>
+</html>
