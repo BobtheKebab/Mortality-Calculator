@@ -1,9 +1,6 @@
 from django.shortcuts import render
 from calculator.models import DataParser
-import pandas as pd
 import plotly.express as px
-import plotly.offline as opy
-
 
 def index(request):
     return render(request, 'calculator/index.html')
