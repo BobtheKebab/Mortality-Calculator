@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from calculator.models import DataParser
 from sodapy import Socrata
 
