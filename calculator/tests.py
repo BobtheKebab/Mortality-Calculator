@@ -1,4 +1,4 @@
-from django.test import TestCase 
+from django.test import TestCase, Client
 from calculator.models import DataParser
 from sodapy import Socrata
 
@@ -33,3 +33,14 @@ class GetResultTestCase(TestCase):
         self.assertEqual(result.empty, False)
         #check that the limit is equal to the parameter
         self.assertEqual(len(result),5)
+
+    
+
+    def testVisualizeDeathCauses(self):
+        result = DataParser.visualizeDeathCauses(self)
+        #This should return a non empty result
+        self.assertEqual(result.empty, False)
+        #check that the limit is equal to 20
+        self.assertEqual(len(result),20)
+
+
