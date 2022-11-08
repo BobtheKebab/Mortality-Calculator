@@ -6,3 +6,4 @@ tzdata==2022.2
 whitenoise==6.2.0
 pandas
 sodapy
+plotly

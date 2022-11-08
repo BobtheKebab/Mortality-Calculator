@@ -6,10 +6,10 @@
     </head>
     <body>
         <h1 id="result_h1">Your Top 5 Causes of Death</h1>
-        <ul>
+        <div class="center">
             {{ query_results | safe}}
-        </ul>
-        <h2>Click the graph to view more information</h2>
+        </div>
+        <h2>Hover the graph to view more information</h2>
         <h2>Or click below to view all death causes over a 10-year period</h2>
 
         <form action="../visualize/">
