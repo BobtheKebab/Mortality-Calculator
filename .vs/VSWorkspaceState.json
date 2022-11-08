@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\calculator",
+    "\\calculator\\templates",
+    "\\calculator\\templates\\calculator",
     "\\DeathCalculator"
   ],
-  "SelectedNode": "\\calculator\\admin.py",
+  "SelectedNode": "\\calculator\\views.py",
   "PreviewInSolutionExplorer": false
 }

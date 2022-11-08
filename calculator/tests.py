@@ -1,6 +1,7 @@
 from django.test import TestCase
 from calculator.models import DataParser
 from sodapy import Socrata
+import pandas as pd
 
 
 data_url = 'data.cityofnewyork.us'  # The Host Name for the API endpointy)
@@ -44,3 +45,12 @@ class GetResultTestCase(TestCase):
         self.assertEqual(len(result),20)
 
 
+
+    def testCleanDataFrame(self):
+        dataTest = {'leading_cause': ['A()', 'B()', 'C()']}
+        dfTest = pd.DataFrame(dataTest, columns=['leading_cause'])
+
+        data = {'leading_cause': ['A', 'B', 'C']}
+        df = pd.DataFrame(data, columns=['leading_cause'])
+
+        self.assertEqual(dfTest, df)
