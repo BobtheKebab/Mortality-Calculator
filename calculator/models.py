@@ -53,10 +53,18 @@ class DataParser:
     @staticmethod
     def cleanDataFrame(df):
 
-        exp = "\(.*?\)"
+        exp = "\(.*?\)" # Remove everything between parentheses
+        maxLength = 40; # Max length of label on graph
 
         for i in df.index:
-            # Remove everything between parenthesis
-            df['leading_cause'][i] = re.sub(exp, "", df['leading_cause'][i])
+            cause = df['leading_cause'][i]
+
+            # Apply regex
+            cause = re.sub(exp, "", cause)
+            # Truncate long names
+            if (len(cause) > maxLength):
+                cause = cause[:maxLength] + "..."
+
+            df['leading_cause'][i] = cause
 
         return df
