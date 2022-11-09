@@ -1,6 +1,7 @@
 from django.db import models #noqa
 import pandas as pd
 from sodapy import Socrata
+import re
 
 data_url = 'data.cityofnewyork.us'  # The Host Name for the API endpointy)
 data_set = 'jb7j-dtam'  # The data set at the API endpoint
@@ -13,6 +14,7 @@ class DataParser:
 
 
 
+    # Get death data for specific ethnicity and sex (results page)
     def getDeathCauses(self, pSex, pEthnicity, pLimit):
 
         if (pEthnicity is None):
@@ -28,10 +30,11 @@ class DataParser:
         #, order="age_adjusted_death_rate DESC")
 
         results_df = pd.DataFrame.from_records(results)
-        return results_df
+        return self.cleanDataFrame(results_df)
 
 
-
+    
+    # Get death data for all categories (visualize page)
     def visualizeDeathCauses(self):
         
         payload = ""
@@ -43,3 +46,25 @@ class DataParser:
         results_df = pd.DataFrame.from_records(results)
 
         return results_df
+
+
+
+    # Clean data before it gets displayed
+    @staticmethod
+    def cleanDataFrame(df):
+
+        exp = "\(.*?\)" # Remove everything between parentheses
+        maxLength = 40; # Max length of label on graph
+
+        for i in df.index:
+            cause = df['leading_cause'][i]
+
+            # Apply regex
+            cause = re.sub(exp, "", cause)
+            # Truncate long names
+            if (len(cause) > maxLength):
+                cause = cause[:maxLength] + "..."
+
+            df['leading_cause'][i] = cause
+
+        return df
