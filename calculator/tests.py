@@ -66,6 +66,8 @@ class GetResultTestCase(TestCase):
 
 
     def testCleanDataFrame(self):
+
+        # Check parenthases removal
         dataTest = {'leading_cause': ['A()', 'B()', 'C()']}
         dfTest = pd.DataFrame(dataTest, columns=['leading_cause'])
 
@@ -75,5 +77,16 @@ class GetResultTestCase(TestCase):
         dfTest = DataParser.cleanDataFrame(dfTest)
         df = DataParser.cleanDataFrame(df)
 
-        self.assertEqual(df.items, dfTest.items)
-        
+        self.assertEqual(df.equals(dfTest), True)
+
+        # Check truncation
+        dataTest = {'leading_cause': ['A_______________________________________+++++', 'B', 'C']}
+        dfTest = pd.DataFrame(dataTest, columns=['leading_cause'])
+
+        data = {'leading_cause': ['A_______________________________________...', 'B', 'C']}
+        df = pd.DataFrame(data, columns=['leading_cause'])
+
+        dfTest = DataParser.cleanDataFrame(dfTest)
+        df = DataParser.cleanDataFrame(df)
+
+        self.assertEqual(df.equals(dfTest), True)
