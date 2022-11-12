@@ -3,10 +3,15 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'calculator/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Special Elite">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <div class="pages">
+        <a href="{% url 'index' %}" class="page-link"><i class="fa fa-arrow-left" style="font-size:30px" id="calculator"></i></a>
+    </div>
     <h1 id="result_h1">All Causes of Death</h1>
-    <ul>
+    <ul id="query_results2">
         {{ query_results | safe}}
     </ul>
 </body>
