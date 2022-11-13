@@ -14,11 +14,12 @@ def results(request):
     results_df = results_df.sort_values(by=['age_adjusted_death_rate'], ascending=False)
 
     fig = px.bar(results_df, x="age_adjusted_death_rate", y="leading_cause", orientation='h',
-    labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate", leading_cause="Top 5 Causes of Death"),
+    labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", leading_cause="Top 5 Causes of Death"),
     color="leading_cause", hover_data=["age_adjusted_death_rate"])
 
     # Hide legend
     fig.update_traces(showlegend=False)
+    fig.update_layout(autosize=True)
 
     # Hide controls for chart
     config = dict({'displayModeBar': False})
@@ -28,7 +29,7 @@ def results(request):
         #fig.data[idx].y = ['1','2','3', '4', '5']
 
 
-    graph = fig.to_html(full_html=False, default_height=700, default_width=1200, config=config)
+    graph = fig.to_html(full_html=False, config=config)
     query_results = graph
     context = {'query_results': query_results}
     return render(request, 'calculator/results.html', context)
