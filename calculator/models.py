@@ -23,12 +23,10 @@ class DataParser:
             return None
         if (pLimit is None):
             return None
-
+        
         payload = "year = '2019' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity + "'"
-        cols = "leading_cause, deaths, age_adjusted_death_rate"
-        results = self.client.get(data_set, limit=pLimit, where=payload, select=cols)
-        #, order="age_adjusted_death_rate DESC")
-
+        results = self.client.get(data_set, limit=pLimit, where=payload)
+        
         results_df = pd.DataFrame.from_records(results)
         return self.cleanDataFrame(results_df)
 
@@ -37,15 +35,12 @@ class DataParser:
     # Get death data for all categories (visualize page)
     def visualizeDeathCauses(self):
         
-        payload = ""
-        #cols = "year, leading_cause, deaths, age_adjusted_death_rate"
-        cols = ""
-        results = self.client.get(data_set, limit=20, where=payload, select=cols)
-        #, order="age_adjusted_death_rate DESC")
+        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
+        #payload += " OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
+        results = self.client.get(data_set, where=payload)
 
         results_df = pd.DataFrame.from_records(results)
-
-        return results_df
+        return self.cleanDataFrame(results_df)
 
 
 
@@ -61,10 +56,29 @@ class DataParser:
 
             # Apply regex
             cause = re.sub(exp, "", cause)
-            # Truncate long names
-            if (len(cause) > maxLength):
-                cause = cause[:maxLength] + "..."
+            # Changing especially long label
+            if "Mental" in cause:
+                cause = "Mental and Behavioral Disorders Due to Substance Use"
 
             df['leading_cause'][i] = cause
+            
+            # Standardize sex column
+            sex = df['sex'][i]
+            if (sex == 'M'):
+                sex = "Male"
+            elif (sex == 'F'):
+                sex = "Female"
+            df['sex'][i] = sex
+
+            ethnicity = df['race_ethnicity'][i]
+            if (ethnicity == 'White Non-Hispanic'):
+                ethnicity = 'Non-Hispanic White'
+            elif (ethnicity == 'Black Non-Hispanic'):
+                ethnicity = 'Non-Hispanic Black'
+            df['race_ethnicity'][i] = ethnicity
+
+        # Make aa death rate a float and sort descending
+        df = df.astype({"age_adjusted_death_rate": float})
+        df = df.sort_values(by=['age_adjusted_death_rate'], ascending=False)
 
         return df

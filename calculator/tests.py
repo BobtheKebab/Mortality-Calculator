@@ -68,11 +68,11 @@ class GetResultTestCase(TestCase):
     def testCleanDataFrame(self):
 
         # Check parenthases removal
-        dataTest = {'leading_cause': ['A()', 'B()', 'C()']}
-        dfTest = pd.DataFrame(dataTest, columns=['leading_cause'])
+        dataTest = {'sex': ['A()', 'B()', 'C()']}
+        dfTest = pd.DataFrame(dataTest, columns=['sex'])
 
-        data = {'leading_cause': ['A', 'B', 'C']}
-        df = pd.DataFrame(data, columns=['leading_cause'])
+        data = {'sex': ['A', 'B', 'C']}
+        df = pd.DataFrame(data, columns=['sex'])
 
         dfTest = DataParser.cleanDataFrame(dfTest)
         df = DataParser.cleanDataFrame(df)
@@ -80,11 +80,11 @@ class GetResultTestCase(TestCase):
         self.assertEqual(df.equals(dfTest), True)
 
         # Check truncation
-        dataTest = {'leading_cause': ['A_______________________________________+++++', 'B', 'C']}
-        dfTest = pd.DataFrame(dataTest, columns=['leading_cause'])
+        dataTest = {'sex': ['A_______________________________________+++++', 'B', 'C']}
+        dfTest = pd.DataFrame(dataTest, columns=['sex'])
 
-        data = {'leading_cause': ['A_______________________________________...', 'B', 'C']}
-        df = pd.DataFrame(data, columns=['leading_cause'])
+        data = {'sex': ['A_______________________________________...', 'B', 'C']}
+        df = pd.DataFrame(data, columns=['sex'])
 
         dfTest = DataParser.cleanDataFrame(dfTest)
         df = DataParser.cleanDataFrame(df)
