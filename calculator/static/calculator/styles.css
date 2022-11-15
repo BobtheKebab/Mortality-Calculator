@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
     text-align: center;
     font-family: 'Special Elite';
@@ -29,13 +33,18 @@ h1{
     color:  #ffffff;
 }
 
+#visualize{
+    font-size: 20px;
+    color: #ffffff;
+}
+
 h2{
     font-size: 27px;
     color:  #ffffff;
 }
 
 #Ethnicity{
-    width: 250px; 
+    width: 250px ; 
     height: 50px;
     font-size: 100%;
     border-radius: 9px;
