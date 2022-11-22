@@ -34,13 +34,31 @@ class DataParser:
     
     # Get death data for all categories (visualize page)
     def visualizeDeathCauses(self):
-        
-        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
-        #payload += " OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
-        results = self.client.get(data_set, where=payload)
 
-        results_df = pd.DataFrame.from_records(results)
-        return self.cleanDataFrame(results_df)
+        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+
+        cols = ""
+        results = self.client.get(data_set, where=payload, select=cols)
+
+        df = pd.DataFrame.from_records(results)
+        df = self.cleanDataFrame(df)
+        df = df.sort_values('year', ascending=True)
+
+        cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
+        "Insitu or Benign / Uncertain Neoplasms ",
+        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
+        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
+        "Mental and Behavioral Disorders due to Use of Alcohol "]
+
+        for cut in cutOut:
+            df = df.query('leading_cause != "' + cut + '"')
+
+        return self.cleanDataFrame(df)
 
 
 
@@ -48,8 +66,8 @@ class DataParser:
     @staticmethod
     def cleanDataFrame(df):
 
-        exp = "\(.*?\)" # Remove everything between parentheses
-        maxLength = 40; # Max length of label on graph
+        exp = r"\(.*?\)" # Remove everything between parentheses
+        #maxLength = 40; # Max length of label on graph
 
         for i in df.index:
             cause = df['leading_cause'][i]
@@ -59,6 +77,9 @@ class DataParser:
             # Changing especially long label
             if "Mental" in cause:
                 cause = "Mental and Behavioral Disorders Due to Substance Use"
+                
+            if "Accidents" in cause:
+                cause = "Accidents Except Drug Poisoning"
 
             df['leading_cause'][i] = cause
             
@@ -69,16 +90,16 @@ class DataParser:
             elif (sex == 'F'):
                 sex = "Female"
             df['sex'][i] = sex
+            
+            # Standardize ethnicity column
+            sex = df['race_ethnicity'][i]
+            if (sex == 'White Non-Hispanic'):
+                sex = "Non-Hispanic White"
+            elif (sex == 'Black Non-Hispanic'):
+                sex = "Non-Hispanic Black"
+            df['race_ethnicity'][i] = sex
 
-            ethnicity = df['race_ethnicity'][i]
-            if (ethnicity == 'White Non-Hispanic'):
-                ethnicity = 'Non-Hispanic White'
-            elif (ethnicity == 'Black Non-Hispanic'):
-                ethnicity = 'Non-Hispanic Black'
-            df['race_ethnicity'][i] = ethnicity
-
-        # Make aa death rate a float and sort descending
         df = df.astype({"age_adjusted_death_rate": float})
-        df = df.sort_values(by=['age_adjusted_death_rate'], ascending=False)
+        df = df.astype({"year": int})
 
         return df
