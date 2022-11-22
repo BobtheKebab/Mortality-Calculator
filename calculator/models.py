@@ -35,9 +35,12 @@ class DataParser:
     # Get death data for all categories (visualize page)
     def visualizeDeathCauses(self):
 
-        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
-        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
-        payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity' AND race_ethnicity != 'Not Stated/Unknown'"
+        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
 
         cols = ""
         results = self.client.get(data_set, where=payload, select=cols)
@@ -46,7 +49,8 @@ class DataParser:
         df = self.cleanDataFrame(df)
         df = df.sort_values('year', ascending=True)
 
-        cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", "Insitu or Benign / Uncertain Neoplasms ",
+        cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
+        "Insitu or Benign / Uncertain Neoplasms ",
         "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
         "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
         "Mental and Behavioral Disorders due to Use of Alcohol "]
@@ -63,7 +67,7 @@ class DataParser:
     def cleanDataFrame(df):
 
         exp = "\(.*?\)" # Remove everything between parentheses
-        maxLength = 40; # Max length of label on graph
+        #maxLength = 40; # Max length of label on graph
 
         for i in df.index:
             cause = df['leading_cause'][i]
