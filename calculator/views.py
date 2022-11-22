@@ -50,7 +50,8 @@ def visualize(request):
             y="age_adjusted_death_rate", 
             color="race_ethnicity",
             labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", 
-            leading_cause="Cause of Death"),
+            leading_cause="Cause of Death",
+            ),
             hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
             facet_col="sex",
             animation_frame="year", 
@@ -62,6 +63,9 @@ def visualize(request):
     # Make animation bar appear lower to not conflict with labels
     fig['layout']['updatemenus'][0]['pad']=dict(r= 10, t= 150)
     fig['layout']['sliders'][0]['pad']=dict(r= 10, t= 150)
+
+    # Update labels for male and female
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=", "")))
 
     config = dict({'displayModeBar': False})
     graph = fig.to_html(full_html=False, config=config)
