@@ -66,7 +66,7 @@ class DataParser:
     @staticmethod
     def cleanDataFrame(df):
 
-        exp = "\(.*?\)" # Remove everything between parentheses
+        exp = r"\(.*?\)" # Remove everything between parentheses
         #maxLength = 40; # Max length of label on graph
 
         for i in df.index:
