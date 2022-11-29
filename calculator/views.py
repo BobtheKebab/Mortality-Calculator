@@ -49,13 +49,15 @@ def visualize(request):
             x="leading_cause", 
             y="age_adjusted_death_rate", 
             color="race_ethnicity",
+            barmode='group',
             labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", 
             leading_cause="Cause of Death",
             ),
             hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
             facet_col="sex",
             animation_frame="year", 
-            animation_group="leading_cause")
+            animation_group="leading_cause",
+            range_y=[0,350])
 
     fig.update_layout(autosize=True, height=700)
     fig.update_layout(legend_title_text='Ethnicity')
@@ -67,7 +69,7 @@ def visualize(request):
     # Update labels for male and female
     fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=", "")))
 
-    config = dict({'displayModeBar': False})
+    config = dict({'displayModeBar': True})
     graph = fig.to_html(full_html=False, config=config)
     query_results = graph
 
