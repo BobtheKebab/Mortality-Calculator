@@ -49,6 +49,9 @@ class DataParser:
         df = self.cleanDataFrame(df)
         df = df.sort_values('year', ascending=True)
 
+        #keeping this artifact for now because it contains causes we want to avoid in general
+        #these are causes that are not common to all 3 years
+        '''''
         cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
         "Insitu or Benign / Uncertain Neoplasms ",
         "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
@@ -57,6 +60,10 @@ class DataParser:
 
         for cut in cutOut:
             df = df.query('leading_cause != "' + cut + '"')
+        '''
+        
+        df = df[ (df.leading_cause == "Diseases of Heart") | (df.leading_cause == "Malignant Neoplasms") | (df.leading_cause == "Diabetes Mellitus") 
+        | (df.leading_cause == "Influenza and Pneumonia") | (df.leading_cause == "Cerebrovascular Disease")]
 
         return self.cleanDataFrame(df)
 
@@ -66,16 +73,16 @@ class DataParser:
     @staticmethod
     def cleanDataFrame(df):
 
-        exp = r"\(.*?\)" # Remove everything between parentheses
-        #maxLength = 40; # Max length of label on graph
+        exp = r"\s+\(.*?\)" # Remove everything between parentheses and preceding whitespace
 
         for i in df.index:
             cause = df['leading_cause'][i]
 
             # Apply regex
             cause = re.sub(exp, "", cause)
+
             # Changing especially long label
-            if "Mental" in cause:
+            if "Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use" in cause:
                 cause = "Mental and Behavioral Disorders Due to Substance Use"
                 
             if "Accidents" in cause:
