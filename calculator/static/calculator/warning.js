@@ -16,3 +16,16 @@ function validateForm(){
         return false;
     }
 }
+
+function fillDropdowns(causes) {
+    var cause1 = document.getElementById("cause1");
+    var cause2 = document.getElementById("cause2");
+
+    for (const cause of causes) {
+        var option = document.createElement("option");
+        option.value = cause;
+        option.text = cause;
+        cause1.appendChild(option);
+        cause2.appendChild(option);
+    }
+}

@@ -14,5 +14,52 @@
     <ul id="query_results2">
         {{ query_results | safe}}
     </ul>
+
+    <br />
+    <h2> Fill out the form below to compare two data points</h2>
+
+    <form action="../compare/" onload=" ">
+        <select name="sex1" id="Sex" onchange="choice1(this)">
+            <option value="Please select">Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <select name="sex2" id="Sex" onchange="choice1(this)">
+            <option value="Please select">Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <br />
+        <select name="ethnicity1" id="Ethnicity" onchange="choice1(this)">
+            <option value="Please select">Ethnicity</option>
+            <option value="Asian and Pacific Islander">Asian and Pacific Islander</option>
+            <option value="Non-Hispanic White">Non-Hispanic White</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="Non-Hispanic Black">Non-Hispanic Black</option>
+        </select>
+        <select name="ethnicity2" id="Ethnicity" onchange="choice1(this)">
+            <option value="Please select">Ethnicity</option>
+            <option value="Asian and Pacific Islander">Asian and Pacific Islander</option>
+            <option value="Non-Hispanic White">Non-Hispanic White</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="Non-Hispanic Black">Non-Hispanic Black</option>
+        </select>
+        <br />
+        <select name="cause1" id="Ethnicity" onchange="choice1(this)">
+            <option value="Please select">Death Cause</option>
+            {% for item in uniqueCauses %}
+            <option value="{{item}}">{{item}}</option>
+            {% endfor %}
+        </select>
+        <select name="cause2" id="Ethnicity" onchange="choice1(this)">
+            <option value="Please select">Death Cause</option>
+            {% for item in uniqueCauses %}
+            <option value="{{item}}">{{item}}</option>
+            {% endfor %}
+        </select>
+        <br />
+        <input type="submit" value="Compare" id="Submit">
+    </form>
+
 </body>
 </html>

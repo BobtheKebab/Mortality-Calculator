@@ -62,8 +62,40 @@ class DataParser:
             df = df.query('leading_cause != "' + cut + '"')
         '''
         
-        df = df[ (df.leading_cause == "Diseases of Heart") | (df.leading_cause == "Malignant Neoplasms") | (df.leading_cause == "Diabetes Mellitus") 
-        | (df.leading_cause == "Influenza and Pneumonia") | (df.leading_cause == "Cerebrovascular Disease")]
+        df = df[ (df.leading_cause == "Diseases of Heart")
+        | (df.leading_cause == "Malignant Neoplasms")
+        | (df.leading_cause == "Diabetes Mellitus")
+        | (df.leading_cause == "Influenza and Pneumonia")
+        | (df.leading_cause == "Cerebrovascular Disease")]
+
+        return self.cleanDataFrame(df)
+
+
+    # Get data for comparison page
+    def compareDeathCauses(self):
+
+        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+
+        cols = ""
+        results = self.client.get(data_set, where=payload, select=cols)
+
+        df = pd.DataFrame.from_records(results)
+        df = self.cleanDataFrame(df)
+        df = df.sort_values('year', ascending=True)
+
+        cutOut = ["Septicemia", "Viral Hepatitis", "Peptic Ulcer", "Parkinson's Disease", 
+        "Insitu or Benign / Uncertain Neoplasms",
+        "Anemias", "Aortic Aneurysm and Dissection", "Atherosclerosis",
+        "Cholelithiasis and Disorders of Gallbladder", "Complications of Medical and Surgical Care",
+        "Mental and Behavioral Disorders due to Use of Alcohol"]
+
+        for cut in cutOut:
+            df = df.query('leading_cause != "' + cut + '"')
 
         return self.cleanDataFrame(df)
 

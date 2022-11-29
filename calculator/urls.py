@@ -8,5 +8,7 @@ urlpatterns = [
     # /calculator/results/
     path('results/', views.results, name='results'),
     # /calculator/visualize/
-    path('visualize/', views.visualize, name='visualize')
+    path('visualize/', views.visualize, name='visualize'),
+    # /calculator/compare/
+    path('compare/', views.compare, name='compare')
 ]
