@@ -44,6 +44,7 @@ def visualize(request):
     query_results = dp.visualizeDeathCauses()
 
     df = query_results
+    uniqueCauses = df["leading_cause"].unique() # Will be used for form dropdown
 
     fig = px.bar(df, 
             x="leading_cause", 
@@ -73,5 +74,87 @@ def visualize(request):
     graph = fig.to_html(full_html=False, config=config)
     query_results = graph
 
-    context = {'query_results': query_results}
+    context = {'query_results': query_results, 'uniqueCauses': uniqueCauses}
     return render(request, 'calculator/visualize.html', context)
+
+
+
+def compare(request):
+    
+    # Getting variables from form
+    sex1 = request.GET['sex1']
+    ethnicity1 = request.GET['ethnicity1']
+    cause1 = request.GET['cause1']
+
+    sex2 = request.GET['sex2']
+    ethnicity2 = request.GET['ethnicity2']
+    cause2 = request.GET['cause2']
+
+    # List to show if inputted sex, ethnicity, and cause (respectively) are the same
+    # 1 for same, 0 for not
+    similarity = [0, 0, 0]
+    similarity[0] = sex1 == sex2
+    similarity[1] = ethnicity1 == ethnicity2
+    similarity[2] = cause1 == cause2
+
+    dp = DataParser()
+    query_results = dp.compareDeathCauses()
+    df = query_results
+
+    data = df[((df.sex == sex1) & (df.race_ethnicity == ethnicity1) & (df.leading_cause == cause1))
+         | ((df.sex == sex2) & (df.race_ethnicity == ethnicity2) & (df.leading_cause == cause2))]
+
+    # color input for graph
+    clr = "race_ethnicity"
+    # title for legend
+    title = "Ethnicity"
+
+    if ( similarity == [0, 1, 0] ):
+        clr = "sex"
+        title = "Sex"
+    if ( similarity == [1, 1, 0] ):
+        clr = "leading_cause"
+        title = "Cause of Death"
+
+    if ( similarity == [0, 1, 1] ):
+        fig = px.bar(data, 
+            x="leading_cause", 
+            y="age_adjusted_death_rate", 
+            color="sex",
+            labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", 
+            leading_cause="Cause of Death",
+            ),
+            hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
+            facet_col="sex",
+            animation_frame="year", 
+            animation_group="leading_cause")
+        # Remove sex labels on top of each facet
+        fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=Male", "")))
+        fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=Female", "")))
+        # Change legend title
+        fig.update_layout(legend_title_text='Sex')
+    else:
+        fig = px.bar(data, 
+            x="leading_cause", 
+            y="age_adjusted_death_rate", 
+            color=clr,
+            labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", 
+            leading_cause="Cause of Death",
+            ),
+            hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
+            #facet_col="sex",
+            animation_frame="year", 
+            animation_group="leading_cause")
+        fig.update_layout(legend_title_text=title)
+
+    if ( (similarity == [0, 0, 1]) | (similarity == [1, 0, 1]) ):
+        fig.update_layout(barmode="group")
+
+    fig.update_layout(autosize=True, height=700)
+
+    config = dict({'displayModeBar': False}) # Hide graph controls
+    graph = fig.to_html(full_html=False, config=config)
+
+    context = {'graph': graph}
+
+    return render(request, 'calculator/compare.html', context)
