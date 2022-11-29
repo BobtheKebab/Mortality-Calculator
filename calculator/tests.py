@@ -18,13 +18,12 @@ class GetResultTestCase(TestCase):
         limit = 5
         payload_noSex = "year = '2019' AND sex = '" + "" + "' AND race_ethnicity = '" + ethnicity + "'"
         payload_noEthnicity = "year = '2019' AND sex = '" + sex + "' AND race_ethnicity = '" + "" + "'"
-        cols = "leading_cause, deaths, age_adjusted_death_rate"
 
-        results_noSex = self.client.get(data_set, limit=limit, where=payload_noSex, select=cols)
-        results_noEthnicity = self.client.get(data_set, limit=limit, where=payload_noEthnicity, select=cols)
-        results_noLimit = self.client.get(data_set, limit=None, where=payload_noEthnicity, select=cols)
+        results_noSex_data = self.client.get(data_set, limit=limit, where=payload_noSex)
+        results_noEthnicity = self.client.get(data_set, limit=limit, where=payload_noEthnicity)
+        results_noLimit = self.client.get(data_set, limit=None, where=payload_noEthnicity)
 
-        results_df_noSex = pd.DataFrame.from_records(results_noSex)
+        results_df_noSex = pd.DataFrame.from_records(results_noSex_data)
         results_df_noEthnicity = pd.DataFrame.from_records(results_noEthnicity)
         results_df_noLimit = pd.DataFrame.from_records(results_noLimit)
 
@@ -42,9 +41,8 @@ class GetResultTestCase(TestCase):
         ethnicity = "Non-Hispanic White"
         limit = 5
         payload = "year = '2019' AND sex = '" + sex + "' AND race_ethnicity = '" + ethnicity + "'"
-        cols = "leading_cause, deaths, age_adjusted_death_rate"
 
-        results = self.client.get(data_set, limit=limit, where=payload, select=cols)
+        results = self.client.get(data_set, limit=limit, where=payload)
 
         results_df = pd.DataFrame.from_records(results)
 
@@ -57,11 +55,26 @@ class GetResultTestCase(TestCase):
     
 
     def testVisualizeDeathCauses(self):
-        result = DataParser.visualizeDeathCauses(self)
+        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+        payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
+
+        cols = ""
+        results = self.client.get(data_set, where=payload, select=cols)
+
+        df = pd.DataFrame.from_records(results)
+        df =  DataParser.cleanDataFrame(df)
+        df = df.sort_values('year', ascending=True)
+
+        result = DataParser.cleanDataFrame(df)
+
         #This should return a non empty result
         self.assertEqual(result.empty, False)
         #check that the limit is equal to 20
-        self.assertEqual(len(result),20)
+        self.assertEqual(len(result),265)
 
 
 
