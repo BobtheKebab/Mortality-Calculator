@@ -12,8 +12,6 @@ class DataParser:
     def __init__(self):
         self.client = Socrata(data_url, app_token)
 
-
-
     # Get death data for specific ethnicity and sex (results page)
     def getDeathCauses(self, pSex, pEthnicity, pLimit):
 
