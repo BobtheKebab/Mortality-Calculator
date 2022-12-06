@@ -79,6 +79,16 @@ def visualize(request):
 
 
 
+def compareForm(request):
+    dp = DataParser()
+    query_results = dp.visualizeDeathCauses()
+    uniqueCauses = query_results["leading_cause"].unique() # Will be used for form dropdown
+
+    context = {'uniqueCauses': uniqueCauses}
+    return render(request, 'calculator/compareForm.html', context)
+
+
+
 def compare(request):
     
     # Getting variables from form
