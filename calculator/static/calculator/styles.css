@@ -14,6 +14,7 @@ body{
 #calculator{
     color: #ffffff;
 }
+
 .pages{
     position: absolute;
     top: 8px;
@@ -35,7 +36,7 @@ h1{
 
 #visualize{
     font-size: 20px;
-    color: #ffffff;
+    color: white;
 }
 
 h2{
@@ -92,3 +93,4 @@ h2{
 #query_results2{
     color: #ffffff
 }
+
