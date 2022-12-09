@@ -2,6 +2,9 @@ from django.shortcuts import render
 from calculator.models import DataParser
 import plotly.express as px
 
+Y_AXIS_MOD = 0.05; # Multiplier to be used when calculating y-axis range
+
+
 def index(request):
     return render(request, 'calculator/index.html')
 
@@ -46,6 +49,11 @@ def visualize(request):
     df = query_results
     uniqueCauses = df["leading_cause"].unique() # Will be used for form dropdown
 
+    # Determine y-axis range by rounding  max value from dataframe and adding constant
+    yAxis = df['age_adjusted_death_rate'].max()
+    yAxis = round(yAxis, -1)
+    yAxis = yAxis + round(yAxis * Y_AXIS_MOD, -1)
+
     fig = px.bar(df, 
             x="leading_cause", 
             y="age_adjusted_death_rate", 
@@ -58,9 +66,9 @@ def visualize(request):
             facet_col="sex",
             animation_frame="year", 
             animation_group="leading_cause",
-            range_y=[0,350])
+            range_y=[0,yAxis])
 
-    fig.update_layout(autosize=True, height=700)
+    fig.update_layout(autosize=True, height=600)
     fig.update_layout(legend_title_text='Ethnicity')
 
     # Make animation bar appear lower to not conflict with labels
@@ -118,6 +126,10 @@ def compare(request):
     clr = "race_ethnicity"
     # title for legend
     title = "Ethnicity"
+    # Determine y-axis range by rounding  max value from dataframe and adding const
+    yAxis = data['age_adjusted_death_rate'].max()
+    yAxis = round(yAxis, -1)
+    yAxis = yAxis + round(yAxis * Y_AXIS_MOD, -1)
 
     if ( similarity == [0, 1, 0] ):
         clr = "sex"
@@ -137,7 +149,8 @@ def compare(request):
             hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
             facet_col="sex",
             animation_frame="year", 
-            animation_group="leading_cause")
+            animation_group="leading_cause",
+            range_y=[0,yAxis])
         # Remove sex labels on top of each facet
         fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=Male", "")))
         fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=Female", "")))
@@ -152,15 +165,15 @@ def compare(request):
             leading_cause="Cause of Death",
             ),
             hover_data=["age_adjusted_death_rate", "sex", "race_ethnicity", "year"], 
-            #facet_col="sex",
             animation_frame="year", 
-            animation_group="leading_cause")
+            animation_group="leading_cause",
+            range_y=[0,yAxis])
         fig.update_layout(legend_title_text=title)
 
     if ( (similarity == [0, 0, 1]) | (similarity == [1, 0, 1]) ):
         fig.update_layout(barmode="group")
 
-    fig.update_layout(autosize=True, height=700)
+    fig.update_layout(autosize=True, height=600)
 
     config = dict({'displayModeBar': False}) # Hide graph controls
     graph = fig.to_html(full_html=False, config=config)
