@@ -68,7 +68,7 @@ def visualize(request):
             animation_group="leading_cause",
             range_y=[0,yAxis])
 
-    fig.update_layout(autosize=True, height=700)
+    fig.update_layout(autosize=True, height=600)
     fig.update_layout(legend_title_text='Ethnicity')
 
     # Make animation bar appear lower to not conflict with labels
@@ -173,7 +173,7 @@ def compare(request):
     if ( (similarity == [0, 0, 1]) | (similarity == [1, 0, 1]) ):
         fig.update_layout(barmode="group")
 
-    fig.update_layout(autosize=True, height=700)
+    fig.update_layout(autosize=True, height=600)
 
     config = dict({'displayModeBar': False}) # Hide graph controls
     graph = fig.to_html(full_html=False, config=config)
