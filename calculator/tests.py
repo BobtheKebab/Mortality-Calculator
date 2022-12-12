@@ -92,3 +92,25 @@ class GetResultTestCase(TestCase):
         df = DataParser.cleanDataFrame(df)
         self.assertEqual(df.equals(dfTest), True)
 
+    def testPrepCSV(self):
+
+        # Get dataframe for city comparison
+        dp = DataParser()
+        data = dp.prepCSV()
+
+        # Check if empty
+        self.assertEqual(data.empty, False)
+
+        # Check if containing 2 cities
+        cities = data["city"].unique()
+        self.assertEqual(len(cities), 2)
+
+        # Make sure numerical columns are not considered strings
+        yearType = data['year'].dtype
+        rateType = data['age_adjusted_death_rate'].dtype
+        self.assertNotEqual(yearType, str)
+        self.assertNotEqual(rateType, str)
+
+        # Make sure there are at least 4 causes of death
+        cause = data['leading_cause'].unique()
+        self.assertTrue(len(cause) > 3)
