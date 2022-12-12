@@ -46,19 +46,6 @@ class DataParser:
         df = pd.DataFrame.from_records(results)
         df = self.cleanDataFrame(df)
         df = df.sort_values('year', ascending=True)
-
-        #keeping this artifact for now because it contains causes we want to avoid in general
-        #these are causes that are not common to all 3 years
-        '''''
-        cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
-        "Insitu or Benign / Uncertain Neoplasms ",
-        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
-        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
-        "Mental and Behavioral Disorders due to Use of Alcohol "]
-
-        for cut in cutOut:
-            df = df.query('leading_cause != "' + cut + '"')
-        '''
         
         df = df[ (df.leading_cause == "Diseases of Heart")
         | (df.leading_cause == "Malignant Neoplasms")
@@ -140,3 +127,17 @@ class DataParser:
         df = df.astype({"year": int})
 
         return df
+
+    def prepCSV(self):
+
+        data = pd.read_csv('staticfiles/calculator/cities.csv')
+        data = data[ (data.year != 2009)]
+
+        data = data.sort_values('year', ascending=True)
+
+        data = data[ (data.leading_cause == "Diseases of Heart")
+                | (data.leading_cause == "Malignant Neoplasms")
+                | (data.leading_cause == "Diabetes Mellitus")
+                | (data.leading_cause == "Chronic Lower Respiratory Diseases") ]
+            
+        return data

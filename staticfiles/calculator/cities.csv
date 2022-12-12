@@ -1,0 +1,73 @@
+leading_cause,sex,year,age_adjusted_death_rate,city
+Malignant Neoplasms,Male,2009,269,Oslo
+Malignant Neoplasms,Male,2014,243,Oslo
+Malignant Neoplasms,Male,2019,217,Oslo
+Malignant Neoplasms,Female,2009,193,Oslo
+Malignant Neoplasms,Female,2014,174,Oslo
+Malignant Neoplasms,Female,2019,153,Oslo
+Diabetes Mellitus,Male,2009,18,Oslo
+Diabetes Mellitus,Male,2014,10,Oslo
+Diabetes Mellitus,Male,2019,11,Oslo
+Diabetes Mellitus,Female,2009,14,Oslo
+Diabetes Mellitus,Female,2014,8,Oslo
+Diabetes Mellitus,Female,2019,7,Oslo
+Diseases of Heart,Male,2009,314,Oslo
+Diseases of Heart,Male,2014,258,Oslo
+Diseases of Heart,Male,2019,194,Oslo
+Diseases of Heart,Female,2009,221,Oslo
+Diseases of Heart,Female,2014,163,Oslo
+Diseases of Heart,Female,2019,130,Oslo
+Chronic Liver Disease and Cirrhosis,Male,2009,,Oslo
+Chronic Liver Disease and Cirrhosis,Male,2014,,Oslo
+Chronic Liver Disease and Cirrhosis,Male,2019,7,Oslo
+Chronic Liver Disease and Cirrhosis,Female,2009,6,Oslo
+Chronic Liver Disease and Cirrhosis,Female,2014,4,Oslo
+Chronic Liver Disease and Cirrhosis,Female,2019,,Oslo
+Intentional Self-Harm,Male,2009,13,Oslo
+Intentional Self-Harm,Male,2014,17,Oslo
+Intentional Self-Harm,Male,2019,18,Oslo
+Intentional Self-Harm,Female,2009,,Oslo
+Intentional Self-Harm,Female,2014,,Oslo
+Intentional Self-Harm,Female,2019,10,Oslo
+Chronic Lower Respiratory Diseases,Male,2009,102,Oslo
+Chronic Lower Respiratory Diseases,Male,2014,73,Oslo
+Chronic Lower Respiratory Diseases,Male,2019,72,Oslo
+Chronic Lower Respiratory Diseases,Female,2009,72,Oslo
+Chronic Lower Respiratory Diseases,Female,2014,60,Oslo
+Chronic Lower Respiratory Diseases,Female,2019,59,Oslo
+Malignant Neoplasms,Male,2009,,NYC
+Malignant Neoplasms,Male,2014,176.7,NYC
+Malignant Neoplasms,Male,2019,147.1,NYC
+Malignant Neoplasms,Female,2009,,NYC
+Malignant Neoplasms,Female,2014,129.7,NYC
+Malignant Neoplasms,Female,2019,111.3,NYC
+Diabetes Mellitus,Male,2009,,NYC
+Diabetes Mellitus,Male,2014,23.8,NYC
+Diabetes Mellitus,Male,2019,23.6,NYC
+Diabetes Mellitus,Female,2009,,NYC
+Diabetes Mellitus,Female,2014,16.8,NYC
+Diabetes Mellitus,Female,2019,15.3,NYC
+Diseases of Heart,Male,2009,,NYC
+Diseases of Heart,Male,2014,219.3,NYC
+Diseases of Heart,Male,2019,216.5,NYC
+Diseases of Heart,Female,2009,,NYC
+Diseases of Heart,Female,2014,146.8,NYC
+Diseases of Heart,Female,2019,137.3,NYC
+Chronic Liver Disease and Cirrhosis,Male,2009,,NYC
+Chronic Liver Disease and Cirrhosis,Male,2014,10,NYC
+Chronic Liver Disease and Cirrhosis,Male,2019,8.8,NYC
+Chronic Liver Disease and Cirrhosis,Female,2009,,NYC
+Chronic Liver Disease and Cirrhosis,Female,2014,3.6,NYC
+Chronic Liver Disease and Cirrhosis,Female,2019,3.3,NYC
+Intentional Self-Harm,Male,2009,,NYC
+Intentional Self-Harm,Male,2014,9.5,NYC
+Intentional Self-Harm,Male,2019,9.4,NYC
+Intentional Self-Harm,Female,2009,,NYC
+Intentional Self-Harm,Female,2014,3.6,NYC
+Intentional Self-Harm,Female,2019,3.2,NYC
+Chronic Lower Respiratory Diseases,Male,2009,,NYC
+Chronic Lower Respiratory Diseases,Male,2014,23.4,NYC
+Chronic Lower Respiratory Diseases,Male,2019,20.8,NYC
+Chronic Lower Respiratory Diseases,Female,2009,,NYC
+Chronic Lower Respiratory Diseases,Female,2014,17.8,NYC
+Chronic Lower Respiratory Diseases,Female,2019,15.8,NYC
