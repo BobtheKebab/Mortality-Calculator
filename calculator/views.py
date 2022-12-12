@@ -181,3 +181,44 @@ def compare(request):
     context = {'graph': graph}
 
     return render(request, 'calculator/compare.html', context)
+
+
+
+def compareCity(request):
+
+    dp = DataParser()
+    data = dp.prepCSV()
+
+    # Determine y-axis range by rounding  max value from dataframe and adding const
+    yAxis = data['age_adjusted_death_rate'].max()
+    yAxis = round(yAxis, -1)
+    yAxis = yAxis + round(yAxis * Y_AXIS_MOD, -1)
+
+    fig = px.bar(data, 
+            x="leading_cause", 
+            y="age_adjusted_death_rate", 
+            color="city",
+            labels=dict(age_adjusted_death_rate="Age Adjusted Death Rate per 100,000", 
+            leading_cause="Cause of Death",
+            city = "City"
+            ), 
+            facet_col="sex",
+            animation_frame="year", 
+            animation_group="leading_cause", 
+            range_y=[0,yAxis], 
+            barmode="group")
+
+    fig.update_layout(autosize=True, height=600)
+
+    # Make animation bar appear lower to not conflict with labels
+    fig['layout']['updatemenus'][0]['pad']=dict(r= 10, t= 150)
+    fig['layout']['sliders'][0]['pad']=dict(r= 10, t= 150)
+
+    # Update labels for male and female
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=", "")))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("oslo", "Oslo")))
+
+    graph = fig.to_html(full_html=False)
+    context = {'graph': graph}
+
+    return render(request, 'calculator/compareCity.html', context)
