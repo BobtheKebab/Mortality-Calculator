@@ -49,7 +49,7 @@ class GetResultTestCase(TestCase):
 
         #This should return a non empty result
         self.assertEqual(result.empty, False)
-        #check that the limit is equal to 20
+        #check that the limit is equal to 265
         self.assertEqual(len(result),265)
 
 
@@ -81,51 +81,14 @@ class GetResultTestCase(TestCase):
         self.assertEqual(result.empty, False)
         self.assertEqual(len(result), 264)
 
+    def testCleanDataFrame(self):
+        # Check parenthases removal
+        dataTest = [{'sex': ['M', 'F', 'M'], 'leading_cause': ['Accidents', 'Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use', 'Accidents'], 'race_ethnicity': ['White Non-Hispanic', 'Black Non-Hispanic', 'White Non-Hispanic'], 'age_adjusted_death_rate':[90.0, 90.0, 90.0], 'year': [2000, 2000, 2000]}]
+        dfTest = pd.DataFrame(dataTest[0], columns=['sex', 'leading_cause', 'race_ethnicity', 'age_adjusted_death_rate', 'year'])
+        data = [{'sex': ['Male', 'Female', 'Male'], 'leading_cause': ['Accidents Except Drug Poisoning', 'Mental and Behavioral Disorders Due to Substance Use', 'Accidents Except Drug Poisoning'], 'race_ethnicity': ['Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic White'] , 'age_adjusted_death_rate':[90.0, 90.0, 90.0], 'year': [2000, 2000, 2000]}]
+        df = pd.DataFrame(data[0], columns=['sex', 'leading_cause', 'race_ethnicity', 'age_adjusted_death_rate', 'year'])
 
-    # def testInvalidInput(self):
-    #     sex = "Female"
-    #     ethnicity = "White"
-    #     limit = 5
-    #     payload_noSex = "year = '2019' AND sex = '" + "" + "' AND race_ethnicity = '" + ethnicity + "'"
-    #     payload_noEthnicity = "year = '2019' AND sex = '" + sex + "' AND race_ethnicity = '" + "" + "'"
+        dfTest = DataParser.cleanDataFrame(dfTest)
+        df = DataParser.cleanDataFrame(df)
+        self.assertEqual(df.equals(dfTest), True)
 
-    #     results_noSex_data = self.client.get(data_set, limit=limit, where=payload_noSex)
-    #     results_noEthnicity = self.client.get(data_set, limit=limit, where=payload_noEthnicity)
-    #     results_noLimit = self.client.get(data_set, limit=None, where=payload_noEthnicity)
-
-    #     results_df_noSex = pd.DataFrame.from_records(results_noSex_data)
-    #     results_df_noEthnicity = pd.DataFrame.from_records(results_noEthnicity)
-    #     results_df_noLimit = pd.DataFrame.from_records(results_noLimit)
-
-    #     #This will test when we have only 1 input which is sex
-    #     self.assertEqual(DataParser.cleanDataFrame(results_df_noSex).empty, True)
-    #     #This will test when we have only 1 input which is ethnicity
-    #     self.assertEqual(DataParser.cleanDataFrame(results_df_noEthnicity).empty, True)
-    #     #This will test when we have only 1 input which is limit
-    #     self.assertEqual(DataParser.cleanDataFrame(results_df_noLimit).empty, True)
-
-
-    # def testCleanDataFrame(self):
-    #     # Check parenthases removal
-    #     dataTest = {'sex': ['A()', 'B()', 'C()']}
-    #     dfTest = pd.DataFrame(dataTest, columns=['sex'])
-
-    #     data = {'sex': ['A', 'B', 'C']}
-    #     df = pd.DataFrame(data, columns=['sex'])
-
-    #     dfTest = DataParser.cleanDataFrame(dfTest)
-    #     df = DataParser.cleanDataFrame(df)
-
-    #     self.assertEqual(df.equals(dfTest), True)
-
-    #     # Check truncation
-    #     dataTest = {'sex': ['A_______________________________________+++++', 'B', 'C']}
-    #     dfTest = pd.DataFrame(dataTest, columns=['sex'])
-
-    #     data = {'sex': ['A_______________________________________...', 'B', 'C']}
-    #     df = pd.DataFrame(data, columns=['sex'])
-
-    #     dfTest = DataParser.cleanDataFrame(dfTest)
-    #     df = DataParser.cleanDataFrame(df)
-
-    #     self.assertEqual(df.equals(dfTest), True)
