@@ -11,15 +11,14 @@
         <a href="{% url 'index' %}" class="page-link"><i class="fa fa-home" style="font-size:30px" id="calculator"></i></a>
     </div>
     <h1 id="result_h1">Comparison Results</h1>
+    {% if disclaimer %}
+    <a id="visualize">Notice: Data point(s) missing from dataset</a>
+    {% endif %}
     <div class="center">
         <div id="bar"> {{ graph | safe}} </div>
     </div>
     <br>
     <a id="visualize">Results are based on 2014 data </a>
-    <br>
-    <br>
-    {% if disclaimer %}
-    <a id="missing_points">Disclaimer: Some data points are not available</a>
-    {% endif %}
+
 </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'calculator/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Special Elite">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="pages">
+        <a href="{% url 'index' %}" class="page-link"><i class="fa fa-home" style="font-size:30px" id="calculator"></i></a>
+    </div>
+    <h1 id="result_h1">Info About Our Data</h1>
+    <br>
+    <p style="color: white; 'Lato'; font-weight: bold; font-size:20px">
+        <a id="visualize"> Datasets Used: </a>
+        <br />
+        <a href="https://data.cityofnewyork.us/Health/New-York-City-Leading-Causes-of-Death/jb7j-dtam" id="visualize">New York City Leading Causes of Death</a>
+        <br />
+        <a href="https://www.norgeshelsa.no/norgeshelsa/" id="visualize">Causes of death, Key Figures (Oslo)</a>
+        <br />
+        <a href="https://www.nyc.gov/assets/doh/downloads/pdf/vs/2014sum.pdf" id="visualize">Summary of Vital Statistics 2014 (NYC)</a>
+        <br />
+        <a href="https://www1.nyc.gov/assets/doh/downloads/pdf/vs/2019sum.pdf" id="visualize">Summary of Vital Statistics 2019 (NYC)</a>
+        <br />
+        <a href="https://www.ipss.go.jp/p-toukei/JMD/13/index-en.html" id="visualize">Tokyo: Age-Standardized Mortality Rate</a>
+    </p>
+
+    <div style="width: 650px; margin: 0 auto; margin-top: 50px;">
+
+        <p style="color: white; 'Lato'; font-weight: bold; font-size:20px">
+            <a id="visualize"> Why Age Adjusted Death Rate? </a>
+            <br />
+            All datapoints use age adjusted death rate per 100,000 people.
+            Age majorly affects the risk of death, as older people are more likely to get sick.
+            This is why age-adjusted death rates can help make better comparisons between different populations, or mortality over time within one area as the population changes.
+        </p>
+
+        <p style="color: white; font-weight: bold; font-size:20px">
+            <a id="visualize"> Notice: </a>
+            <br />
+            The "New York City Leading Causes of Death" data set had its 2019 data removed.
+            Previously, 2019 was the most recent year in that set.
+            Additionally, there existed a 5 year gap between 2019 and 2014.
+            This means that, as of 12/12/22, there is no data for 2015 onward.
+            The Top 5 and Demographic Comparison charts reflect this issue.
+            If you would like to complain about this missing data, you can inquire here:
+            Please send any questions to nycsyndromic@health.nyc.gov
+        </p>
+    </div>
+
+</body>
+</html>

@@ -5,7 +5,6 @@ import plotly.express as px
 Y_AXIS_MOD = 0.05 # Multiplier to be used when calculating y-axis range
 CHART_HEIGHT = 600 # Default chart height
 
-
 # Landing page
 def index(request):
     return render(request, 'calculator/index.html')
@@ -19,8 +18,9 @@ def results(request):
     dp = DataParser()
 
     # Get causes for specified sex and ethnicity, put in dataframe
-    query_results = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5)
-    results_df = query_results
+    results_df = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5)
+    
+    results_df = results_df.sort_values('age_adjusted_death_rate', ascending=False)
 
     # Create visualization
     fig = px.bar(results_df, # Bar chart from dataframe
@@ -84,7 +84,8 @@ def visualize(request):
     fig['layout']['sliders'][0]['pad']=dict(r= 10, t= 150)
 
     # Update labels for male and female
-    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=", "")))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=F", "Female")))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=M", "Male")))
 
     # Make graph into html
     graph = fig.to_html(full_html=False)
@@ -207,19 +208,12 @@ def compare(request):
     # Make graph into html
     graph = fig.to_html(full_html=False)
 
-    # Pass graph to compare and render
-    context = {'graph': graph}
+    # Displaying disclaimer if there is missing data
+    numDatapoints = len(data)
+    disclaimer = numDatapoints != 4
 
-    cutOut = ["Assault", "Intentional Self-Harm", "Peptic Ulcer ", "Parkinson's Disease ", 
-        "Insitu or Benign / Uncertain Neoplasms ",
-        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
-        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
-        "Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use", "Nephritis, Nephrotic Syndrome and Nephrisis"]
-    if cause1 in cutOut:
-        context = {'graph': graph, 'disclaimer': True}
-    
-    if cause2 in cutOut:
-        context = {'graph': graph, 'disclaimer': True}
+    # Pass graph to compare and render
+    context = {'graph': graph, 'disclaimer': disclaimer}
     return render(request, 'calculator/compare.html', context)
 
 
@@ -268,3 +262,9 @@ def compareCity(request):
     # Pass graph to compareCity and render
     context = {'graph': graph}
     return render(request, 'calculator/compareCity.html', context)
+
+
+
+# Site bibliography
+def bib(request):
+    return render(request, 'calculator/bib.html')
