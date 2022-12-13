@@ -65,8 +65,6 @@ class DataParser:
         # Clean dataframe and return it
         return self.cleanDataFrame(df)
 
-
-
     # Get data for comparison page
     def compareDeathCauses(self):
 
