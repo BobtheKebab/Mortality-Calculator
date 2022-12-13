@@ -101,9 +101,9 @@ class GetResultTestCase(TestCase):
         # Check if empty
         self.assertEqual(data.empty, False)
 
-        # Check if containing 2 cities
+        # Check if containing 3 cities
         cities = data["city"].unique()
-        self.assertEqual(len(cities), 2)
+        self.assertEqual(len(cities), 3)
 
         # Make sure numerical columns are not considered strings
         yearType = data['year'].dtype
