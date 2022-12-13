@@ -256,3 +256,9 @@ def compareCity(request):
     # Pass graph to compareCity and render
     context = {'graph': graph}
     return render(request, 'calculator/compareCity.html', context)
+
+
+
+# Site bibliography
+def bib(request):
+    return render(request, 'calculator/bib.html')

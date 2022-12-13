@@ -14,5 +14,7 @@ urlpatterns = [
     # /calculator/compareForm/
     path('compareForm/', views.compareForm, name='compareForm'),
     # /calculator/compareCity/
-    path('compareCity/', views.compareCity, name='compareCity')
+    path('compareCity/', views.compareCity, name='compareCity'),
+    # /calculator/bib/
+    path('bib/', views.bib, name='bib')
 ]

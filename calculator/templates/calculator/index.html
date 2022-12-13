@@ -15,13 +15,13 @@
         <h2 id="secondSentence">But how will it happen?</h2>
         <h2 id="thirdSentence">Enter your information below to find out.</h2>
                   
-        <form action="results/" onsubmit="return validateForm()" method="get"> 
+        <form action="results/" onsubmit="return validateForm()" method="get">
             <select name="Sex" id="Sex" onchange="choice1(this)">
                 <option value="Please select">Sex</option>
                 <option value="M">M</option>
                 <option value="F">F</option>
-            </select>                                                                 
-                                                                             
+            </select>
+
             <br><br>
             <select name="Ethnicity" id="Ethnicity" onchange="choice1(this)">
                 <option value="Please select">Ethnicity</option>
@@ -34,6 +34,8 @@
             <input type="submit" value="Submit" id="Submit">
             <br><br>
             <a href="{% url 'visualize' %}" id="visualize">Click here to see city wide data</a>
+            <br />
+            <a href="{% url 'bib' %}" id="visualize">Site bibliography</a>
 
         </form>
 </body>
