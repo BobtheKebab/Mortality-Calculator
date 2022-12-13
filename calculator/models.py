@@ -28,8 +28,9 @@ class DataParser:
         if (pLimit is None):
             return None
         
-        # Get data where year is 2014, pSex, pEthnicity
+        # Get data where year is 2014, pSex, pEthnicity (exclude "all other causes")
         payload = "year = '2014' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity+"'"
+        payload += " AND leading_cause != 'All Other Causes'"
         results = self.client.get(data_set, limit=pLimit, where=payload)
         
         # Create a dataframe from queried data and return it
@@ -89,7 +90,7 @@ class DataParser:
         "Insitu or Benign / Uncertain Neoplasms",
         "Anemias", "Aortic Aneurysm and Dissection", "Atherosclerosis",
         "Cholelithiasis and Disorders of Gallbladder","Complications of Medical and Surgical Care",
-        "Mental and Behavioral Disorders due to Use of Alcohol"]
+        "Mental and Behavioral Disorders due to Use of Alcohol", "All Other Causes"]
 
         # Remove specified causes from dataframe
         for cut in cutOut:

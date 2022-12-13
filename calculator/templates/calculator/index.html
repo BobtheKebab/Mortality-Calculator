@@ -11,9 +11,8 @@
     <body>
         <script src="{% static 'calculator/warning.js' %}"></script>
         <h1>DEATH CALCULATOR</h1>
-        <h2 id="firstSentence">We're all going to die one day.</h2>
-        <h2 id="secondSentence">But how will it happen?</h2>
-        <h2 id="thirdSentence">Enter your information below to find out.</h2>
+        <h2 id="firstSentence">What is most likely to be your cause of death, as a New Yorker?</h2>
+        <h2 style="margin-bottom:-100px"id="thirdSentence">Enter your information below to find out.</h2>
                   
         <form action="results/" onsubmit="return validateForm()" method="get">
             <select name="Sex" id="Sex" onchange="choice1(this)">
@@ -33,9 +32,9 @@
             <br><br>
             <input type="submit" value="Submit" id="Submit">
             <br><br>
-            <a href="{% url 'visualize' %}" id="visualize">Click here to see city wide data</a>
-            <br />
-            <a href="{% url 'bib' %}" id="visualize">Site bibliography</a>
+            <a href="{% url 'visualize' %}" id="visualize">Or click here to see citywide data</a>
+            <br /> <br /> <br />
+            <a href="{% url 'bib' %}" id="visualize">Click to learn more about the data we used</a>
 
         </form>
 </body>

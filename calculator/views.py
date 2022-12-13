@@ -18,8 +18,9 @@ def results(request):
     dp = DataParser()
 
     # Get causes for specified sex and ethnicity, put in dataframe
-    query_results = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5)
-    results_df = query_results
+    results_df = dp.getDeathCauses(request.GET['Sex'], request.GET['Ethnicity'], 5)
+    
+    results_df = results_df.sort_values('age_adjusted_death_rate', ascending=False)
 
     # Create visualization
     fig = px.bar(results_df, # Bar chart from dataframe
@@ -83,7 +84,8 @@ def visualize(request):
     fig['layout']['sliders'][0]['pad']=dict(r= 10, t= 150)
 
     # Update labels for male and female
-    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=", "")))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=F", "Female")))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("sex=M", "Male")))
 
     # Make graph into html
     graph = fig.to_html(full_html=False)
@@ -206,8 +208,12 @@ def compare(request):
     # Make graph into html
     graph = fig.to_html(full_html=False)
 
+    # Displaying disclaimer if there is missing data
+    numDatapoints = len(data)
+    disclaimer = numDatapoints != 4
+
     # Pass graph to compare and render
-    context = {'graph': graph}
+    context = {'graph': graph, 'disclaimer': disclaimer}
     return render(request, 'calculator/compare.html', context)
 
 

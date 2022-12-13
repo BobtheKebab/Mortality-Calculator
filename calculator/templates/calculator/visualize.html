@@ -10,17 +10,17 @@
     <div class="pages">
         <a href="{% url 'index' %}" class="page-link"><i class="fa fa-home" style="font-size:30px" id="calculator"></i></a>
     </div>
-    <h1 id="result_h1">Citywide Data</h1>
+    <h1 id="result_h1">Citywide Data</h1>   
     <ul id="query_results2">
         {{ graph | safe}}
     </ul>
-    <a id="visualize">Results are based on 2014 data </a>
+    <br />
 
-    <form action="../compareForm/" onload=" ">
+    <form style="display: inline; margin-right: 30px;" action="../compareForm/" onload=" ">
         <input type="submit" value="Compare by Demographic" id="Submit">
     </form>
 
-    <form action="../compareCity/" onload=" ">
+    <form style="display: inline;" action="../compareCity/" onload=" ">
         <input type="submit" value="Compare by City" id="Submit">
     </form>
 
