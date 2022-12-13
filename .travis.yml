@@ -17,6 +17,6 @@ install:
 script:
 - export DJANGO_SECRETKEY=secret
 - black .
-- flake8 . --max-line-length=100
+- flake8 . --max-line-length=125
 - coverage run manage.py test calculator
 - coveralls
