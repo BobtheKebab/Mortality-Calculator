@@ -115,7 +115,7 @@ class DataParser:
             cause = re.sub(exp, "", cause)
 
             # Changing especially long label
-            if '''Mental and Behavioral Disorders due to Accidental 
+            if '''Mental and Behavioral Disorders due to Accidental
                 Poisoning and Other Psychoactive Substance Use''' in cause:
                 cause = "Mental and Behavioral Disorders Due to Substance Use"
                 
