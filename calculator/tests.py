@@ -84,8 +84,7 @@ class GetResultTestCase(TestCase):
         # Check parenthases removal
         dataTest = [{'sex': ['M', 'F', 'M'], 'leading_cause': ['Accidents', 'Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use', 'Accidents'], 'race_ethnicity': ['White Non-Hispanic', 'Black Non-Hispanic', 'White Non-Hispanic'], 'age_adjusted_death_rate':[90.0, 90.0, 90.0], 'year': [2000, 2000, 2000]}]
         dfTest = pd.DataFrame(dataTest[0], columns=['sex', 'leading_cause', 'race_ethnicity', 'age_adjusted_death_rate', 'year'])
-        data =
-         [{'sex': ['Male', 'Female', 'Male'], 'leading_cause': ['Accidents Except Drug Poisoning', 'Mental and Behavioral Disorders Due to Substance Use', 'Accidents Except Drug Poisoning'], 'race_ethnicity': ['Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic White'] , 'age_adjusted_death_rate':[90.0, 90.0, 90.0], 'year': [2000, 2000, 2000]}]
+        data = [{'sex': ['Male', 'Female', 'Male'], 'leading_cause': ['Accidents Except Drug Poisoning', 'Assault', 'Accidents Except Drug Poisoning'], 'race_ethnicity': ['Non-Hispanic White', 'Non-Hispanic Black', 'Non-Hispanic White'] , 'age_adjusted_death_rate':[90.0, 90.0, 90.0], 'year': [2000, 2000, 2000]}]
         df = pd.DataFrame(data[0], columns=['sex', 'leading_cause', 'race_ethnicity', 'age_adjusted_death_rate', 'year'])
 
         dfTest = DataParser.cleanDataFrame(dfTest)
