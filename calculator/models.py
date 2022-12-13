@@ -30,6 +30,7 @@ class DataParser:
         
         # Get data where year is 2014, pSex, pEthnicity
         payload = "year = '2014' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity+"'"
+        payload += " AND leading_cause != 'All Other Causes'"
         results = self.client.get(data_set, limit=pLimit, where=payload)
         
         # Create a dataframe from queried data and return it
