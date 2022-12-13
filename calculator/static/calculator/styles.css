@@ -39,6 +39,11 @@ h1{
     color: white;
 }
 
+#missing_points {
+    font-size: 27px;
+    color: white;
+}
+
 h2{
     font-size: 27px;
     color:  #ffffff;
@@ -93,4 +98,5 @@ h2{
 #query_results2{
     color: #ffffff
 }
+
 

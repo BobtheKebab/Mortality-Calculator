@@ -49,22 +49,24 @@ class DataParser:
 
         #keeping this artifact for now because it contains causes we want to avoid in general
         #these are causes that are not common to all 3 years
-        '''''
+       
         cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
         "Insitu or Benign / Uncertain Neoplasms ",
         "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
         "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
         "Mental and Behavioral Disorders due to Use of Alcohol "]
-
+        '''''
         for cut in cutOut:
             df = df.query('leading_cause != "' + cut + '"')
         '''
         
+        '''
         df = df[ (df.leading_cause == "Diseases of Heart")
         | (df.leading_cause == "Malignant Neoplasms")
         | (df.leading_cause == "Diabetes Mellitus")
         | (df.leading_cause == "Influenza and Pneumonia")
         | (df.leading_cause == "Cerebrovascular Disease")]
+        '''
 
         return self.cleanDataFrame(df)
 
@@ -92,8 +94,8 @@ class DataParser:
         "Cholelithiasis and Disorders of Gallbladder", "Complications of Medical and Surgical Care",
         "Mental and Behavioral Disorders due to Use of Alcohol"]
 
-        for cut in cutOut:
-            df = df.query('leading_cause != "' + cut + '"')
+        #for cut in cutOut:
+            #df = df.query('leading_cause != "' + cut + '"')
 
         return self.cleanDataFrame(df)
 

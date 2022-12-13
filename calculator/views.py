@@ -98,7 +98,6 @@ def compareForm(request):
 
 
 def compare(request):
-    
     # Getting variables from form
     sex1 = request.GET['sex1']
     ethnicity1 = request.GET['ethnicity1']
@@ -107,7 +106,6 @@ def compare(request):
     sex2 = request.GET['sex2']
     ethnicity2 = request.GET['ethnicity2']
     cause2 = request.GET['cause2']
-
     # List to show if inputted sex, ethnicity, and cause (respectively) are the same
     # 1 for same, 0 for not
     similarity = [0, 0, 0]
@@ -179,5 +177,17 @@ def compare(request):
     graph = fig.to_html(full_html=False, config=config)
 
     context = {'graph': graph}
+
+    cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
+        "Insitu or Benign / Uncertain Neoplasms ",
+        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
+        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
+        "Mental and Behavioral Disorders due to Use of Alcohol "]
+
+    if cause1 in cutOut:
+        context = {'graph': graph, 'disclaimer': True}
+    
+    elif cause2 in cutOut:
+        context = {'graph': graph, 'disclaimer': True}
 
     return render(request, 'calculator/compare.html', context)
