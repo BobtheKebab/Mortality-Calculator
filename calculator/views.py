@@ -208,6 +208,17 @@ def compare(request):
 
     # Pass graph to compare and render
     context = {'graph': graph}
+
+    cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
+        "Insitu or Benign / Uncertain Neoplasms ",
+        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
+        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
+        "Mental and Behavioral Disorders due to Use of Alcohol "]
+    if cause1 in cutOut:
+        context = {'graph': graph, 'disclaimer': True}
+    
+    elif cause2 in cutOut:
+        context = {'graph': graph, 'disclaimer': True}
     return render(request, 'calculator/compare.html', context)
 
 
@@ -255,16 +266,4 @@ def compareCity(request):
 
     # Pass graph to compareCity and render
     context = {'graph': graph}
-
-    cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
-        "Insitu or Benign / Uncertain Neoplasms ",
-        "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
-        "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
-        "Mental and Behavioral Disorders due to Use of Alcohol "]
-    if cause1 in cutOut:
-        context = {'graph': graph, 'disclaimer': True}
-    
-    elif cause2 in cutOut:
-        context = {'graph': graph, 'disclaimer': True}
-        
     return render(request, 'calculator/compareCity.html', context)
