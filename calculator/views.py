@@ -5,6 +5,7 @@ import plotly.express as px
 Y_AXIS_MOD = 0.05 # Multiplier to be used when calculating y-axis range
 CHART_HEIGHT = 600 # Default chart height
 
+
 # Landing page
 def index(request):
     return render(request, 'calculator/index.html')
