@@ -125,7 +125,6 @@ class DataParser:
 
             # Assign changed death cause
             df['leading_cause'][i] = cause
-
         # Make death rate column float and year column int
         df = df.astype({"age_adjusted_death_rate": float})
         df = df.astype({"year": int})
