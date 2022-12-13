@@ -147,10 +147,4 @@ class DataParser:
         # Sort data by year
         data = data.sort_values('year', ascending=True)
 
-        # Select specified death causes from data
-        data = data[ (data.leading_cause == "Diseases of Heart")
-                | (data.leading_cause == "Malignant Neoplasms")
-                | (data.leading_cause == "Diabetes Mellitus")
-                | (data.leading_cause == "Chronic Lower Respiratory Diseases") ]
-            
         return data
