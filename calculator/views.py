@@ -100,7 +100,7 @@ def compareForm(request):
     # Initialize data parser model
     dp = DataParser()
     # Get citywide causes and put in dataframe
-    query_results = dp.visualizeDeathCauses()
+    query_results = dp.compareDeathCauses()
 
     # Save list of unique causes for dropdown form
     uniqueCauses = query_results["leading_cause"].unique() 
