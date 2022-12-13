@@ -5,6 +5,7 @@ import plotly.express as px
 Y_AXIS_MOD = 0.05 # Multiplier to be used when calculating y-axis range
 CHART_HEIGHT = 600 # Default chart height
 
+
 # Landing page
 def index(request):
     return render(request, 'calculator/index.html')
@@ -209,15 +210,15 @@ def compare(request):
     # Pass graph to compare and render
     context = {'graph': graph}
 
-    cutOut = ["Septicemia ", "Viral Hepatitis ", "Peptic Ulcer ", "Parkinson's Disease ", 
+    cutOut = ["Assault", "Intentional Self-Harm", "Peptic Ulcer ", "Parkinson's Disease ", 
         "Insitu or Benign / Uncertain Neoplasms ",
         "Anemias ", "Aortic Aneurysm and Dissection ", "Atherosclerosis ",
         "Cholelithiasis and Disorders of Gallbladder ", "Complications of Medical and Surgical Care ",
-        "Mental and Behavioral Disorders due to Use of Alcohol "]
+        "Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use", "Nephritis, Nephrotic Syndrome and Nephrisis"]
     if cause1 in cutOut:
         context = {'graph': graph, 'disclaimer': True}
     
-    elif cause2 in cutOut:
+    if cause2 in cutOut:
         context = {'graph': graph, 'disclaimer': True}
     return render(request, 'calculator/compare.html', context)
 
