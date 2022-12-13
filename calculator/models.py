@@ -28,8 +28,8 @@ class DataParser:
         if (pLimit is None):
             return None
         
-        # Get data where year is 2019, pSex, pEthnicity
-        payload = "year = '2019' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity+"'"
+        # Get data where year is 2014, pSex, pEthnicity
+        payload = "year = '2014' AND sex = '" + pSex + "' AND race_ethnicity = '" + pEthnicity+"'"
         results = self.client.get(data_set, limit=pLimit, where=payload)
         
         # Create a dataframe from queried data and return it
@@ -41,10 +41,8 @@ class DataParser:
     # Get death data for all categories (visualize page)
     def visualizeDeathCauses(self):
 
-        # Getting data for 2019, 2014, and 2009, excluding unknown and other ethnicities
-        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
-        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
-        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        # Getting data for 2014 and 2009, excluding unknown and other ethnicities
+        payload = "year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
         payload += " AND race_ethnicity != 'Not Stated/Unknown'"
         payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
         payload += " AND race_ethnicity != 'Not Stated/Unknown'"
@@ -72,10 +70,8 @@ class DataParser:
     # Get data for comparison page
     def compareDeathCauses(self):
 
-        # Getting data for 2019, 2014, and 2009, excluding unknown and other ethnicities
-        payload = "year = '2019' AND race_ethnicity != 'Other Race/ Ethnicity'"
-        payload += " AND race_ethnicity != 'Not Stated/Unknown'"
-        payload += "OR year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
+        # Getting data for 2014 and 2009, excluding unknown and other ethnicities
+        payload = "year = '2014' AND race_ethnicity != 'Other Race/ Ethnicity'"
         payload += " AND race_ethnicity != 'Not Stated/Unknown'"
         payload += "OR year = '2009' AND race_ethnicity != 'Other Race/ Ethnicity'"
         payload += " AND race_ethnicity != 'Not Stated/Unknown'"
@@ -131,22 +127,6 @@ class DataParser:
 
             # Assign changed death cause
             df['leading_cause'][i] = cause
-            
-            # Standardize sex column
-            sex = df['sex'][i]
-            if (sex == 'M'):
-                sex = "Male"
-            elif (sex == 'F'):
-                sex = "Female"
-            df['sex'][i] = sex
-            
-            # Standardize ethnicity column
-            eth = df['race_ethnicity'][i]
-            if (eth == 'White Non-Hispanic'):
-                eth = "Non-Hispanic White"
-            elif (eth == 'Black Non-Hispanic'):
-                eth = "Non-Hispanic Black"
-            df['race_ethnicity'][i] = eth
 
         # Make death rate column float and year column int
         df = df.astype({"age_adjusted_death_rate": float})
